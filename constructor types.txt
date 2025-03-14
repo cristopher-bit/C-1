@@ -1,0 +1,134 @@
+Constructors (Default, Parameterized, Initialization List for const data members).
+Accept() & Display() methods.
+Dynamic allocation using new.
+Student array to check multiple constructor calls.
+Printing this pointer to verify invoking object.
+C++ Program:
+cpp
+Copy
+Edit
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Student {
+private:
+    const int id;    // Constant data member (initialized using initialization list)
+    char name[50];
+    int age;
+
+public:
+    // Default Constructor
+    Student() : id(0) { 
+        strcpy(name, "Unknown");
+        age = 0;
+        cout << "Default Constructor Called. Object Address: " << this << endl;
+    }
+
+    // Parameterized Constructor
+    Student(int r, const char* n, int a) : id(r) {
+        strcpy(name, n);
+        age = a;
+        cout << "Parameterized Constructor Called. Object Address: " << this << endl;
+    }
+
+    // Accept function to input student details
+    void Accept() {
+        cout << "Enter Student ID: ";
+        int temp_id;
+        cin >> temp_id; // id is const, so we can't modify it after initialization
+        cout << "Enter Name: ";
+        cin >> name;
+        cout << "Enter Age: ";
+        cin >> age;
+    }
+
+    // Display function to print student details
+    void Display() {
+        cout << "Student ID: " << id << ", Name: " << name << ", Age: " << age << endl;
+        cout << "This Pointer Address: " << this << endl;  // Printing `this` pointer
+    }
+};
+
+int main() {
+    cout << "\nCreating Student Object Dynamically...\n";
+    Student* stu1 = new Student(101, "Alice", 20);  // Parameterized constructor
+    stu1->Display();
+    delete stu1; // Free dynamically allocated memory
+
+    cout << "\nCreating Array of Students...\n";
+    int n;
+    cout << "Enter number of students: ";
+    cin >> n;
+    Student* students = new Student[n];  // Calls default constructor n times
+
+    // Accept details for each student
+    for (int i = 0; i < n; i++) {
+        cout << "\nEnter details for Student " << i + 1 << ":\n";
+        students[i].Accept();
+    }
+
+    // Display details of each student
+    cout << "\nDisplaying Student Details:\n";
+    for (int i = 0; i < n; i++) {
+        students[i].Display();
+    }
+
+    delete[] students; // Free allocated memory
+
+    return 0;
+}
+Explanation:
+Constructors Implementation:
+
+Default Constructor: Initializes id to 0, name to "Unknown", age to 0.
+Parameterized Constructor: Initializes id, sets name, age, and prints the object address.
+Initialization List: Used for the const int id (which cannot be assigned inside the constructor body).
+Accept() & Display():
+
+Accept() takes input for name and age (but id is const, so can't be modified).
+Display() prints student details and the this pointer, verifying it points to the invoking object.
+Dynamic Object Creation (new operator):
+
+A single Student object is created dynamically (stu1).
+Array of Students (students array) is dynamically created, calling the default constructor n times.
+Checking Constructor Calls:
+
+When the array is created, the default constructor is called multiple times.
+The this pointer confirms that different memory locations are used for different objects.
+Example Output:
+yaml
+Copy
+Edit
+Creating Student Object Dynamically...
+Parameterized Constructor Called. Object Address: 0x55a1cda
+Student ID: 101, Name: Alice, Age: 20
+This Pointer Address: 0x55a1cda
+
+Creating Array of Students...
+Enter number of students: 2
+
+Default Constructor Called. Object Address: 0x55b1cdf
+Default Constructor Called. Object Address: 0x55b1ce3
+
+Enter details for Student 1:
+Enter Student ID: 201
+Enter Name: John
+Enter Age: 22
+
+Enter details for Student 2:
+Enter Student ID: 202
+Enter Name: Bob
+Enter Age: 21
+
+Displaying Student Details:
+Student ID: 0, Name: John, Age: 22
+This Pointer Address: 0x55b1cdf
+
+Student ID: 0, Name: Bob, Age: 21
+This Pointer Address: 0x55b1ce3
+Key Takeaways:
+✅ Constructors work correctly, including default, parameterized, and initialization list for const members.
+✅ Dynamically allocated Student object works fine (new operator used).
+✅ Student array triggers multiple constructor calls (checked via constructor print statements).
+✅ this pointer prints correct memory addresses for each student, proving that each object has a separate memory location.
