@@ -1,0 +1,143 @@
+#include <iostream>
+using namespace std;
+
+// Structure to store student details
+struct Student {
+    int rollNo;
+    char name[50];
+};
+
+// Function to accept student details
+void Accept(Student* students, int n) {
+    for (int i = 0; i < n; i++) {
+        cout << "Enter Roll No: ";
+        cin >> students[i].rollNo;
+        cout << "Enter Name: ";
+        cin >> students[i].name;
+    }
+}
+
+// Function to display student details
+void Display(Student* students, int n) {
+    for (int i = 0; i < n; i++) {
+        cout << "Roll No: " << students[i].rollNo << ", Name: " << students[i].name << endl;
+    }
+}
+
+// Function to sort an array (Bubble Sort)
+void SortAndDisplay(int* arr, int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    cout << "Sorted Numbers: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+// Function to accept and print characters as a string
+void AcceptAndDisplayString(char* str, int n) {
+    cout << "Enter characters: ";
+    for (int i = 0; i < n; i++) {
+        cin >> str[i];
+    }
+    str[n] = '\0'; // Null terminator to make it a valid string
+    cout << "Entered String: " << str << endl;
+}
+
+// Function to calculate and display average of numbers
+void FindAverage(int* arr, int n) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+    }
+    cout << "Average: " << (sum / (float)n) << endl;
+}
+
+// Function to multiply numbers by 2 and display them
+void MultiplyByTwo(int* arr, int n) {
+    cout << "Multiplied by 2: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] * 2 << " ";
+    }
+    cout << endl;
+}
+
+// Menu function
+void Menu() {
+    int choice, n;
+    do {
+        cout << "\nMenu:\n";
+        cout << "1. Accept and sort numbers\n";
+        cout << "2. Accept and display characters as a string\n";
+        cout << "3. Find average of numbers\n";
+        cout << "4. Multiply numbers by 2\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        if (choice == 1 || choice == 3 || choice == 4) {
+            cout << "Enter number of elements: ";
+            cin >> n;
+            int* arr = new int[n];
+            cout << "Enter numbers: ";
+            for (int i = 0; i < n; i++) {
+                cin >> arr[i];
+            }
+
+            if (choice == 1) SortAndDisplay(arr, n);
+            else if (choice == 3) FindAverage(arr, n);
+            else if (choice == 4) MultiplyByTwo(arr, n);
+
+            delete[] arr; // Free allocated memory
+        } else if (choice == 2) {
+            cout << "Enter number of characters: ";
+            cin >> n;
+            char* str = new char[n + 1]; // +1 for null terminator
+            AcceptAndDisplayString(str, n);
+            delete[] str; // Free allocated memory
+        }
+    } while (choice != 5);
+}
+
+// Main function
+int main() {
+    int numStudents;
+    cout << "Enter number of students: ";
+    cin >> numStudents;
+    Student* students = new Student[numStudents];
+
+    Accept(students, numStudents);
+    cout << "Student Details:\n";
+    Display(students, numStudents);
+
+    delete[] students; // Free allocated memory
+
+    Menu(); // Call the menu for additional operations
+
+    return 0;
+}
+Explanation:
+Student Struct & Functions:
+
+Student struct stores rollNo and name.
+Accept() function takes student details as input.
+Display() function prints student details.
+Menu Options:
+
+Sort and Display Numbers (using Bubble Sort).
+Accept and Display a String (reads n characters and displays them as a string).
+Find Average (calculates and prints average of n numbers).
+Multiply Each Number by 2 (prints each number multiplied by 2).
+Exit option to terminate the program.
+Dynamic Memory Allocation:
+
+Used new to allocate memory for arrays (int* arr and char* str).
+Used delete[] to free memory after use.
